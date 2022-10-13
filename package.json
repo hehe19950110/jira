@@ -24,7 +24,7 @@
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "commitlint": "commitlint --config commitlint.config.js -e -V",
-    "json-server": "json-server __json_server_mock__/db.json --watch "
+    "json-server": "json-server __json_server_mock__/db.json --watch"
   },
   "config": {
     "commitizen": {
