@@ -10,6 +10,7 @@
     "@types/node": "^16.11.65",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
+    "qs": "^6.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -22,9 +23,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    
     "commitlint": "commitlint --config commitlint.config.js -e -V",
-    "json-server": "json-server __json_server_mock__/db.json --watch"
+    "json-server": "json-server __json_server_mock__/db.json --watch "
   },
   "config": {
     "commitizen": {
@@ -64,9 +64,11 @@
     "prettier": "2.7.1"
   },
   "lint-staged": {
-    "*.{js,css,md,ts,tsx}": ["prettier --write","git add"]
+    "*.{js,css,md,ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
   },
-  
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged --allow-empty",
