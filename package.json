@@ -10,6 +10,7 @@
     "@types/node": "^16.11.65",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
+    "jira-dev-tool": "^1.7.61",
     "qs": "^6.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -75,5 +76,8 @@
       "pre-commit": "lint-staged --allow-empty",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
