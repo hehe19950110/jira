@@ -62,7 +62,7 @@ debounce 原理讲解：
             // 所以，log()#3 结束后，就只剩timeout#3在独自等待了
 ***/
 // 后面用泛型来规范类型
-export const useDebounce = (value: unknown, delay?: number): any => {
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
@@ -75,20 +75,21 @@ export const useDebounce = (value: unknown, delay?: number): any => {
   return debouncedValue;
 };
 
-// export const useArray = <T>(initialArray: T[]) => {
-//   const [value, setValue] = useState(initialArray);
-//   return {
-//     value,
-//     setValue,
-//     add: (item: T) => setValue([...value, item]),
-//     clear: () => setValue([]),
-//     removeIndex: (index: number) => {
-//       const copy = [...value];
-//       copy.splice(index, 1);
-//       setValue(copy);
-//     },
-//   };
-// };
+export const useArray = <T>(initialArray: T[]) => {
+  const [value, setValue] = useState(initialArray);
+
+  return {
+    value,
+    setValue,
+    add: (item: T) => setValue([...value, item]),
+    clear: () => setValue([]),
+    removeIndex: (index: number) => {
+      const copy = [...value];
+      copy.splice(index, 1);
+      setValue(copy);
+    },
+  };
+};
 
 // export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
 //   const oldTitle = useRef(document.title).current;
