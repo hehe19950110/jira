@@ -1,13 +1,7 @@
 import React from "react"
-import { User } from "../project-list/search-panel"
+import { Project } from "../../types/project"
+import { User } from "../../types/user"
 
-interface Project {
-  id: string,
-  name: string,
-  personId: string,
-  pin: boolean,
-  organization: string,
-}
 
 interface ListProps {
   list: Project[],
