@@ -1,21 +1,23 @@
 import React, { ReactNode, useState } from "react";
 import * as auth from "../auth-provider";
+import { http } from "../types/http";
 import { User } from "../types/user";
+import { useMount } from "../utils";
 
 interface AuthForm {
   username: string;
   password: string;
 }
 
-// const bootstrapUser = async () => {
-//   let user = null;
-//   const token = auth.getToken();
-//   if (token) {
-//     const data = await http("me", { token });
-//     user = data.user;
-//   }
-//   return user;
-// };
+const bootstrapUser = async () => {
+  let user = null;
+  const token = auth.getToken();
+  if (token) {
+    const data = await http("me", { token });
+    user = data.user;
+  }
+  return user;
+};
 
 const AuthContext = React.createContext <{
   user: User | null;
@@ -36,6 +38,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(null);
       //queryClient.clear();
     });
+    
+    useMount( () => {
+      bootstrapUser().then(setUser)
+    });
 
   return (
     <AuthContext.Provider
@@ -44,9 +50,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     />
   );
 }
-  //const queryClient = useQueryClient();
 
-//   // point free
+//const queryClient = useQueryClient();
 
 
 //   useMount(
