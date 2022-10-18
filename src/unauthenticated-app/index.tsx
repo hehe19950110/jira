@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { LoginScreen } from "./login";
 import { RegisterScreen } from "./register";
-
+import { Card } from "antd";
 
 
 export const UnauthenticatedApp = () => {
@@ -10,11 +10,14 @@ export const UnauthenticatedApp = () => {
 
   //useDocumentTitle("请登录注册以继续");
   return (
-    <div>
-      {
+    <div style={{display:'flex',justifyContent:'center'}}> 
+    <Card>
+    {
         isRegister ? <RegisterScreen /> : <LoginScreen />
       }
       <button onClick={() => setIsRegister(!isRegister)}> 切换到{isRegister ? '登录' : '注册'}</button>
+    </Card>
+
     </div>
   )
 }
