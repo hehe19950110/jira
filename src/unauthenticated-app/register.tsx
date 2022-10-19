@@ -1,6 +1,7 @@
 import { Form, Input, Button } from "antd";
 import React from "react";
 import { useAuth } from "../context/auth-context";
+import 'antd/dist/antd.min.css'
 
 export const RegisterScreen = () => {
   

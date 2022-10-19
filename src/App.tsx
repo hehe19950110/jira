@@ -17,7 +17,6 @@ function App() {
       password: "123456",
     }),
   }).then((res) => {
-    console.log(res);
     debugger;
   });
 

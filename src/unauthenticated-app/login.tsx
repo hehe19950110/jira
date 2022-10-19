@@ -1,6 +1,8 @@
 import React from "react";
 import { useAuth } from "../context/auth-context";
 import { Button, Form, Input } from "antd";
+import 'antd/dist/antd.min.css'
+
 
 // interface Base {
 //   id: number

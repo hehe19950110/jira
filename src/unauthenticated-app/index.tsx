@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { LoginScreen } from "./login";
 import { RegisterScreen } from "./register";
-import { Card } from "antd";
+import { Card, Button } from "antd";
+import 'antd/dist/antd.min.css'
 
 
 export const UnauthenticatedApp = () => {
@@ -15,7 +16,9 @@ export const UnauthenticatedApp = () => {
     {
         isRegister ? <RegisterScreen /> : <LoginScreen />
       }
-      <button onClick={() => setIsRegister(!isRegister)}> 切换到{isRegister ? '登录' : '注册'}</button>
+      <Button type={"link"} onClick={() => setIsRegister(!isRegister)}>
+          {isRegister ? "已经有账号了？直接登录" : "没有账号？注册新账号"}
+      </Button>
     </Card>
 
     </div>
