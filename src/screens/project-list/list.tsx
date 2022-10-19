@@ -1,22 +1,27 @@
-import { Table } from "antd"
+import { Table  } from "antd"
 import React from "react"
-import { Project } from "../../types/project"
+import { Project } from "../../types/project";
 import { User } from "../../types/user"
 
 
 interface ListProps {
-  list: Project[],
-  users: User[],
+  users: User[];
+  list : Project[];
+
 }
 
-export const List = ({list, users}: ListProps) => {
+export const List = ({ users, list }: ListProps) => {
+  console.log(users, list )
   return <Table pagination={false} 
-                dataSource={list} 
+                dataSource={list}
                 columns={
                   [{
                     title:'名称',
                     dataIndex:'name',
                     sorter:(a,b) => a.name.localeCompare(b.name),
+                  },{
+                    title: "部门",
+                    dataIndex: "organization",
                   },{
                     title:'负责人',
                     render(value,project){

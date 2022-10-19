@@ -5,6 +5,7 @@ import { useAuth } from './context/auth-context';
 import { UnauthenticatedApp } from './unauthenticated-app';
 
 const apiUrl = process.env.REACT_APP_API_URL;
+
 function App() {
   const {user} = useAuth()
   fetch(`${apiUrl}/register`, {
