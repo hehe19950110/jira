@@ -19,7 +19,7 @@ export const ProjectListScreen = () => {
   const client = useHttp()
 
   useEffect( () => {
-    client('project', {data:cleanObject(debouncedParam)}).then(setList)
+    client('projects', {data:cleanObject(debouncedParam)}).then(setList)
     // fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParam))}`).then(
     //   async (response) => {
     //     if (response.ok) {

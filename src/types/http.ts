@@ -38,6 +38,7 @@ export const http = async (
         window.location.reload();
         return Promise.reject({ message: "请重新登录" });
       }
+
       const data = await response.json();
       if (response.ok) {
         return data;

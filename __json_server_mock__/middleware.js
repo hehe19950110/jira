@@ -10,4 +10,5 @@ module.exports = (req, res, next) => {
       return res.status(400).json({ message: "用户名或者密码错误" });
     } //登录失败
   }
+  return next();
 };

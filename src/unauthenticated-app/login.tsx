@@ -1,7 +1,8 @@
 import React from "react";
 import { useAuth } from "../context/auth-context";
-import { Button, Form, Input } from "antd";
+import { Form, Input } from "antd";
 import 'antd/dist/antd.min.css'
+import { LongButton } from ".";
 
 
 // interface Base {
@@ -39,7 +40,7 @@ export const LoginScreen = () => {
     </Form.Item>
 
     <Form.Item>
-    <Button htmlType={"submit"} type={"primary"}>登录</Button>
+    <LongButton htmlType={"submit"} type={"primary"}>登录</LongButton>
     </Form.Item>
 
   </Form>)

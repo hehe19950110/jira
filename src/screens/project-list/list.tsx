@@ -11,7 +11,6 @@ interface ListProps {
 }
 
 export const List = ({ users, list }: ListProps) => {
-  console.log(users, list )
   return <Table pagination={false} 
                 dataSource={list}
                 columns={
