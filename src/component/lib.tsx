@@ -1,7 +1,4 @@
 import styled from "@emotion/styled";
-import React from "react";
-import { Button, Spin, Typography } from "antd";
-//import { DevTools } from "jira-dev-tool";
 
 export const Row = styled.div<{
   gap?: number | boolean;
@@ -13,18 +10,16 @@ export const Row = styled.div<{
   justify-content: ${(props) => (props.between ? "space-between" : undefined)};
   margin-bottom: ${(props) => props.marginBottom + "rem"};
 
+  //每一个直接子元素：
   > * {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
     margin-right: ${(props) =>
-      typeof props.gap === "number"
-        ? props.gap + "rem"
-        : props.gap
-        ? "2rem"
-        : undefined};
-  }
+      typeof props.gap === "number" ? props.gap + "rem" : props.gap ? "2rem" : undefined};
+    }
 `;
 
+/** 
 const FullPage = styled.div`
   height: 100vh;
   display: flex;
@@ -65,3 +60,4 @@ export const ScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
+**/
