@@ -1,7 +1,7 @@
-import { Input, Select } from "antd";
+import { Form, Input, Select } from "antd";
 import React from "react"
 import { User } from "../../types/user";
-
+//import {jsx} from '@emotion/react';
 interface SearchPanelProps {
   users: User[],
   param: {
@@ -13,21 +13,19 @@ interface SearchPanelProps {
 
 export const SearchPanel = ({users, param, setParam}: SearchPanelProps) => {
  
-  return <form>
-    <div>
-
-      <Input type="text" 
+  return( 
+  <Form style={{ marginRight: "2rem" , marginBottom: "1rem"}} layout={"inline"} >
+    <Form.Item>
+      <Input placeholder={'项目名'}
+             type="text" 
              value={param.name} 
              onChange={evt => setParam({
                ...param,
                name: evt.target.value
        })} />
-      {/*setParam({
-        ...param,
-        name:evt.target.value
-      })
-      同 setParam(Object.assign({},param,{name:evt.target.value})) */}
+    </Form.Item>
 
+    <Form.Item>
       <Select value={param.personId} 
               onChange={value => setParam({
                ...param,
@@ -38,7 +36,7 @@ export const SearchPanel = ({users, param, setParam}: SearchPanelProps) => {
           users.map(users => <Select.Option value={users.id}>{users.name}</Select.Option>)
         }
       </Select>
-
-    </div>
-  </form>
+    </Form.Item>
+  </Form>
+  )
 }

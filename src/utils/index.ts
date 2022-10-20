@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
-
 export const isVoid = (value: unknown) =>
   value === undefined || value === null || value === "";
 
@@ -16,7 +15,7 @@ export const isVoid = (value: unknown) =>
 // b = () => {}
 // 在一个函数里，改变传入的对象本身是不好的
 
-export const cleanObject = (object: object) => {
+export const cleanObject = (object: { [key: string]: unknown }) => {
   // // Object.assign({}, object)
   // if (!object) {
   //   return {};
@@ -34,7 +33,9 @@ export const cleanObject = (object: object) => {
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
-  }, [callback]);
+    // 依赖项里加上callback会造成无限循环，这个和 useCallback、useMemo有关
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 };
 
 /*** 
