@@ -24,7 +24,11 @@ export const List = ({ users, ...props }: ListProps) => {
               },{
                 title:'负责人',
                 render(value,project){
-                  return <span>{users.find(user => user.id === project.personId)?.name || '未知'}</span>
+                  return (
+                    <span>
+                      {users.find((user) => user.id === project.id)?.name || '未知'}
+                    </span>
+                  )
                 }
               },{
                 title: "创建时间",

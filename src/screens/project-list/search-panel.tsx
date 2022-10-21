@@ -8,6 +8,7 @@ interface SearchPanelProps {
     name: string,
     personId:string,
   },
+  // param: Partial<Pick<Project, "name" | "personId">>;
   setParam: (param: SearchPanelProps["param"]) => void;
 }
 

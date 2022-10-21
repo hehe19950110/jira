@@ -3,6 +3,7 @@ import { useAuth } from "../context/auth-context";
 import { Form, Input } from "antd";
 import 'antd/dist/antd.min.css'
 import { LongButton } from ".";
+import { useAsync } from "../utils/use-async";
 
 
 // interface Base {
@@ -22,12 +23,18 @@ import { LongButton } from ".";
 
 //const apiUrl = process.env.REACT_APP_API_URL;
 
-export const LoginScreen = () => {
+export const LoginScreen = ( {onError}: {onError: (error: Error) => void} ) => {
   
-  const {login} = useAuth()
-  const handleSubmit = (values:{username:string;password:string}) => {
-    login (values);
-  }
+  const {login} = useAuth();
+  const {run , isLoading} = useAsync(undefined, { throwOnError: true });
+  const handleSubmit = async (values:{username:string;password:string}) => {
+    try {
+      await run (login (values))
+    }
+    catch(e:any) {
+      onError(e);
+    }
+  };
 
   return (
   <Form onFinish={handleSubmit}>   
@@ -40,7 +47,7 @@ export const LoginScreen = () => {
     </Form.Item>
 
     <Form.Item>
-    <LongButton htmlType={"submit"} type={"primary"}>登录</LongButton>
+    <LongButton loading={isLoading} htmlType={"submit"} type={"primary"}>登录</LongButton>
     </Form.Item>
 
   </Form>)

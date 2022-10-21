@@ -53,24 +53,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 }
 
-//const queryClient = useQueryClient();
-
-
-//   useMount(
-//     useCallback(() => {
-//       run(bootstrapUser());
-//     }, [])
-//   );
-
-//   if (isIdle || isLoading) {
-//     return <FullPageLoading />;
-//   }
-
-//   if (isError) {
-//     return <FullPageErrorFallback error={error} />;
-//   }
-
-
 export const useAuth = () => {
   const context = React.useContext(AuthContext);
   if (!context) {
