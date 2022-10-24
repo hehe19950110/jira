@@ -1,6 +1,7 @@
 import { Table, TableProps  } from "antd"
 import dayjs from "dayjs";
 import React from "react"
+import { Link } from "react-router-dom";
 import { Project } from "../../types/project";
 import { User } from "../../types/user"
 
@@ -9,10 +10,12 @@ interface ListProps extends TableProps<Project> {
   users: User[];
 }
 
-export const List = ({ users, ...props }: ListProps) => {
+export const List = ({ users,...props }: ListProps) => {
   return (
-     <Table pagination={false} 
-            rowKey={"id"}
+    //console.log(users),
+    console.log(props),
+     <Table rowKey={"id"}
+            pagination={false} 
             columns={[          
               {
                 title:'名称',
@@ -41,14 +44,16 @@ export const List = ({ users, ...props }: ListProps) => {
                   );
                 },
               },{
+                
                 // render(value, project) {
                 //   return <More project={project} />;
                 // },
-              }
+              },
             ]} 
             {...props }
      />
-  )
+     
+  );
 }
 
 

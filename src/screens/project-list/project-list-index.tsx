@@ -23,10 +23,13 @@ export const ProjectListScreen = () => {
     <h2>项目列表</h2>
     <SearchPanel users={users || []} param= {param} key={''} setParam= {setParam} />
     {error ? <Typography.Text type={"danger"}> {error.message} </Typography.Text> : null}
-    <List loading={isLoading} users={users || []} dataSource={list || []} />
+    <List loading={isLoading} users={users || []} dataSource={list || [] || null}/>
+
   </Container>
   );
+  
 }
+
 
 const Container = styled.div`
 padding: 3.2rem`
