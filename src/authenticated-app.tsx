@@ -12,7 +12,7 @@ export const AuthenticatedApp = () => {
 
   return (
     <Container>
-      {value.notExist}
+      {value ? value.notExist : ''}
       <Header between={true} >
         <HeaderLeft gap={true}>
         <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />

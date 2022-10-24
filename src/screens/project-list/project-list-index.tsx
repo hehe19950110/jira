@@ -21,7 +21,7 @@ export const ProjectListScreen = () => {
   return (
   <Container>
     <h2>项目列表</h2>
-    <SearchPanel users={users || []} param= {param} setParam= {setParam} />
+    <SearchPanel users={users || []} param= {param} key={''} setParam= {setParam} />
     {error ? <Typography.Text type={"danger"}> {error.message} </Typography.Text> : null}
     <List loading={isLoading} users={users || []} dataSource={list || []} />
   </Container>

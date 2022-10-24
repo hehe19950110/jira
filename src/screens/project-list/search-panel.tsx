@@ -4,6 +4,7 @@ import { User } from "../../types/user";
 //import {jsx} from '@emotion/react';
 interface SearchPanelProps {
   users: User[],
+  key: number | string,
   param: {
     name: string,
     personId:string,
@@ -32,9 +33,9 @@ export const SearchPanel = ({users, param, setParam}: SearchPanelProps) => {
                ...param,
                personId: value
       })}>
-        <Select.Option value={''}>负责人</Select.Option>
+        <Select.Option key={''} value={''}>负责人</Select.Option>
         {
-          users.map(users => <Select.Option value={users.id}>{users.name}</Select.Option>)
+          users.map(users => <Select.Option key={''} value={users.id}>{users.name}</Select.Option>)
         }
       </Select>
     </Form.Item>
