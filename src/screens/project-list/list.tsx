@@ -13,7 +13,7 @@ interface ListProps extends TableProps<Project> {
 export const List = ({ users,...props }: ListProps) => {
   return (
     //console.log(users),
-    console.log(props),
+    //console.log(props),
      <Table rowKey={"id"}
             pagination={false} 
             columns={[          

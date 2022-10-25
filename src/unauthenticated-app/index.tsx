@@ -6,15 +6,22 @@ import styled from "@emotion/styled";
 import logo from '../assets/logo.svg'
 import left from '../assets/left.svg'
 import right from '../assets/right.svg'
-
+import { Helmet } from "react-helmet";
+import { useDocumentTitle } from "utils";
 
 export const UnauthenticatedApp = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  //useDocumentTitle("请登录注册以继续");
+  useDocumentTitle("请登录或注册", false);
+
   return (
     <Container> 
+    {/* react-Helmet 用react语法 给react页面 设置页面头部的配置：
+    <Helmet>
+     <title>项目列表</title>
+    </Helmet> 
+    */}
       <Header />
       <Background />
       <ShadowCard>

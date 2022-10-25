@@ -6,7 +6,8 @@ import styled from "@emotion/styled"
 import { Typography } from "antd"
 import { useProjects } from "../../utils/project"
 import { useUsers } from "../../utils/user"
-import { useDebounce } from "../../utils"
+import { useDebounce, useDocumentTitle } from "../../utils"
+import { Helmet } from "react-helmet"
 
 export const ProjectListScreen = () => {
 
@@ -18,9 +19,16 @@ export const ProjectListScreen = () => {
   const { isLoading, error, data: list } = useProjects(debouncedParam);
   const {data:users} = useUsers();
 
+  useDocumentTitle('项目列表' , false);
+
   return (
   <Container>
-    <h2>项目列表</h2>
+    {/* react-Helmet 用react语法 给react页面 设置页面头部的配置：
+    <Helmet>
+     <title>项目列表</title>
+    </Helmet> 
+    */}
+    <h1>项目列表</h1>
     <SearchPanel users={users || []} param= {param} key={''} setParam= {setParam} />
     {error ? <Typography.Text type={"danger"}> {error.message} </Typography.Text> : null}
     <List loading={isLoading} users={users || []} dataSource={list || [] || null}/>
