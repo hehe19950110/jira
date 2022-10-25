@@ -1,15 +1,16 @@
 import { Form, Input, Select } from "antd";
 import React from "react"
+import { Project } from "types/project";
 import { User } from "../../types/user";
 //import {jsx} from '@emotion/react';
 interface SearchPanelProps {
   users: User[],
   key: number | string,
-  param: {
-    name: string,
-    personId:string,
-  },
-  // param: Partial<Pick<Project, "name" | "personId">>;
+  // param: {
+  //   name: string,
+  //   personId:string,
+  // },
+  param: Partial<Pick<Project, "name" | "personId">>;
   setParam: (param: SearchPanelProps["param"]) => void;
 }
 

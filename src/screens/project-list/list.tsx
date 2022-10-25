@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Project } from "../../types/project";
 import { User } from "../../types/user"
 
-
+// TODO 把所有ID改成number类型
 interface ListProps extends TableProps<Project> {
   users: User[];
 }
@@ -19,8 +19,12 @@ export const List = ({ users,...props }: ListProps) => {
             columns={[          
               {
                 title:'名称',
-                dataIndex:'name',
                 sorter:(a,b) => a.name.localeCompare(b.name),
+                render(value,project) {
+                  return (
+                    <Link to={String(project.id)}>{project.name}</Link>
+                  );
+                }
               },{
                 title: "部门",
                 dataIndex: "organization",
