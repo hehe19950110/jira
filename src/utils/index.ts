@@ -95,9 +95,9 @@ export const useArray = <T>(initialArray: T[]) => {
 
 export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
   const oldTitle = useRef(document.title).current;
-  //console.log("渲染时的oldtitle", oldTitle);
-  // 页面加载时: 旧title
-  // 加载后：新title
+
+  // 页面加载时: oldtitle === 旧title
+  // 加载后：oldtitle === 新title
 
   useEffect(() => {
     document.title = title;
@@ -106,7 +106,6 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
   useEffect(() => {
     return () => {
       if (!keepOnUnmount) {
-        //console.log("卸载时的oldtitle", oldTitle);
         document.title = oldTitle;
       }
     };
