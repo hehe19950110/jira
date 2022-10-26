@@ -12,8 +12,6 @@ interface ListProps extends TableProps<Project> {
 
 export const List = ({ users,...props }: ListProps) => {
   return (
-    //console.log(users),
-    //console.log(props),
      <Table rowKey={"id"}
             pagination={false} 
             columns={[          
@@ -22,7 +20,7 @@ export const List = ({ users,...props }: ListProps) => {
                 sorter:(a,b) => a.name.localeCompare(b.name),
                 render(value,project) {
                   return (
-                    <Link to={String(project.id)}>{project.name}</Link>
+                    <Link to={`projects/${String(project.id)}`}>{project.name}</Link>
                   );
                 }
               },{

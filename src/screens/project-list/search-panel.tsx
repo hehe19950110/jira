@@ -5,12 +5,8 @@ import { User } from "../../types/user";
 //import {jsx} from '@emotion/react';
 interface SearchPanelProps {
   users: User[],
-  key: number | string,
-  // param: {
-  //   name: string,
-  //   personId:string,
-  // },
-  param: Partial<Pick<Project, "name" | "personId">>;
+  key: '',
+  param: Partial<Pick<Project, "name" | "personId" >> ;
   setParam: (param: SearchPanelProps["param"]) => void;
 }
 

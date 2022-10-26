@@ -4,7 +4,10 @@ import { useMemo, useState } from "react";
 export const useProjectsSearchParams = () => {
   const [param, setParam] = useState(["name", "personId"]);
   return [
-    useMemo(() => ({ ...param, personId: Number() || undefined }), [param]),
+    useMemo(
+      () => ({ ...param, personId: Number(param) || undefined }),
+      [param]
+    ),
     setParam,
   ] as const;
 };
