@@ -28,8 +28,8 @@ export const useAsync = <D>(
     ...defaultInitialState,
     ...initialState,
   });
-
-  //const [retry, setRetry] = useState(() => () => {});
+  //用 useState 保存函数；如果直接传入函数，惰性初始化，在函数中计算并返回初始的state，此函数是在初始渲染时被调用，后续渲染时会被忽略
+  const [retry, setRetry] = useState(() => () => {});
 
   const setData = (data: D) =>
     setState({
@@ -46,11 +46,22 @@ export const useAsync = <D>(
     });
 
   // run 用来触发异步请求
-  const run = (promise: Promise<D>) => {
+  const run = (
+    promise: Promise<D>,
+    runConfig?: { retry: () => Promise<D> }
+  ) => {
     if (!promise || !promise.then) {
       throw new Error("请传入 Promise 类型数据");
     }
+
+    setRetry(() => () => {
+      if (runConfig?.retry) {
+        run(runConfig?.retry(), runConfig);
+      }
+    });
+
     setState({ ...state, stat: "loading" });
+
     return promise
       .then((data) => {
         setData(data);
@@ -72,14 +83,8 @@ export const useAsync = <D>(
     run,
     setData,
     setError,
+    // retry 被调用时 重新跑一遍 run， 让state 刷新一遍
+    retry,
     ...state,
   };
 };
-
-// const useSafeDispatch = <T>(dispatch: (...args: T[]) => void) => {
-//   const mountedRef = useMountedRef();
-//   return useCallback(
-//     (...args: T[]) => (mountedRef.current ? dispatch(...args) : void 0),
-//     [dispatch, mountedRef]
-//   );
-// };

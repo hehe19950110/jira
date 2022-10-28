@@ -1,21 +1,37 @@
 import { Table, TableProps  } from "antd"
+import { Pin } from "component/pin-icon";
 import dayjs from "dayjs";
 import React from "react"
 import { Link } from "react-router-dom";
+import { useEditProject } from "utils/project";
 import { Project } from "../../types/project";
 import { User } from "../../types/user"
 
 // TODO 把所有ID改成number类型
 interface ListProps extends TableProps<Project> {
   users: User[];
+  refresh?: () => void;
 }
 
-export const List = ({ users,...props }: ListProps) => {
+export const List = ({users,...props}: ListProps) => {
+  const {mutate} = useEditProject();
+  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
+  // 先获取 project.id， 再然后晚一点得到 pin
   return (
      <Table rowKey={"id"}
             pagination={false} 
-            columns={[          
+            columns={[   
               {
+                title: <Pin checked={true} disabled={true} />,
+                render(value, project) {
+                  return (
+                    <Pin
+                      checked={project.pin}
+                      onCheckedChange={(pin) => {pinProject(project.id)}}
+                    />
+                  );
+                },
+              }, {
                 title:'名称',
                 sorter:(a,b) => a.name.localeCompare(b.name),
                 render(value,project) {
@@ -45,11 +61,6 @@ export const List = ({ users,...props }: ListProps) => {
                     </span>
                   );
                 },
-              },{
-                
-                // render(value, project) {
-                //   return <More project={project} />;
-                // },
               },
             ]} 
             {...props }
