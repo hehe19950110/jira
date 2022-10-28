@@ -9,6 +9,7 @@ import { Navigate, Route, Routes,} from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectScreen } from "screens/project";
 import { resetRoute } from "utils";
+import { logout } from "auth-provider";
 
 export const AuthenticatedApp = () => {
   return (
@@ -22,40 +23,47 @@ export const AuthenticatedApp = () => {
             <Route element={<Navigate to={'/projects'} />}/>
           </Routes>
         </Router>
-
       </Main>
     </Container>
   );
 }
 
 const PageHeader = () => {
-  const {logout,user} = useAuth();
-  return <Header between={true} >
-    <HeaderLeft gap={true}>
-      <Button type={"link"} onClick={resetRoute}>
-       <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
-      </Button>
-      <h2>项目</h2>
-      <h2>用户</h2>
-    </HeaderLeft>
+  return(
+    <Header between={true} >
+      <HeaderLeft gap={true}>
+        <Button type={"link"} onClick={resetRoute}>
+        <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+        </Button>
+        <h2>项目</h2>
+        <h2>用户</h2>
+      </HeaderLeft>
 
-    <HeaderRight >
-      <Dropdown overlay={
+      <HeaderRight>
+        <User />
+      </HeaderRight>
+    </Header>
+  )
+
+}
+ const User = () => {
+  const { logout, user } = useAuth();
+   return (
+    <Dropdown 
+      overlay={
         <Menu>
           <Menu.Item key={"logout"}>
             <Button onClick={logout} type={"link"}> 登出 </Button>
           </Menu.Item>
         </Menu>
-        }>
-        <Button type={"link"} onClick={(e) => e.preventDefault()}>
-          Hi,{user?.name}
-        </Button>
-      </Dropdown>
-    </HeaderRight>
-  </Header>
-
-}
-
+      }
+    >
+      <Button type={"link"} onClick={(e) => e.preventDefault()}>
+        Hi,{user?.name}
+      </Button>
+    </Dropdown>
+  )
+ }
 
 /* 
 从内容出发，用flex ; 你先有一组内容(数量一般不固定),然后希望他们均匀的分布在容器中，由内容自己的大小决定占据的空间

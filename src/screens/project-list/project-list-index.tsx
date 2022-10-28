@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { List } from "./list"
 import { SearchPanel } from "./search-panel"
 import styled from "@emotion/styled"
@@ -8,7 +8,7 @@ import { useUsers } from "../../utils/user"
 import { useDebounce, useDocumentTitle } from "../../utils"
 import { Helmet } from "react-helmet"
 import { useProjectsSearchParams } from "./util"
-import { ButtonNoPadding, Row } from "component/lib"
+import { Row } from "component/lib"
 
 export const ProjectListScreen = () => {
 
