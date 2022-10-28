@@ -2,6 +2,7 @@
 // import { useMountedRef } from "utils/index";
 
 import { useState } from "react";
+import { useMountedRef } from "utils";
 
 interface State<D> {
   error: Error | null;
@@ -28,6 +29,8 @@ export const useAsync = <D>(
     ...defaultInitialState,
     ...initialState,
   });
+  const mountedRef = useMountedRef();
+
   //用 useState 保存函数；如果直接传入函数，惰性初始化，在函数中计算并返回初始的state，此函数是在初始渲染时被调用，后续渲染时会被忽略
   const [retry, setRetry] = useState(() => () => {});
 
@@ -64,7 +67,7 @@ export const useAsync = <D>(
 
     return promise
       .then((data) => {
-        setData(data);
+        if (mountedRef.current) setData(data);
         return data;
       })
       .catch((error) => {
