@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "./context/auth-context";
 import { ProjectListScreen } from "./screens/project-list/project-list-index";
 import styled from "@emotion/styled";
@@ -9,12 +9,16 @@ import { Navigate, Route, Routes,} from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectScreen } from "screens/project";
 import { resetRoute } from "utils";
-import { logout } from "auth-provider";
+import { ProjectModal } from "screens/project-list/project-modal";
+import { ProjectPopover } from "component/project-pop-over";
 
 export const AuthenticatedApp = () => {
+  const [projectModalOpen,setProjectModalOpen] = useState(false);
+
   return (
     <Container>
       <PageHeader />
+      <Button onClick={ () => setProjectModalOpen(true)} >打开</Button>
       <Main>
         <Router>
           <Routes>
@@ -24,6 +28,8 @@ export const AuthenticatedApp = () => {
           </Routes>
         </Router>
       </Main>
+
+      <ProjectModal projectModalOpen={projectModalOpen} onClose={() => setProjectModalOpen(false)} />
     </Container>
   );
 }
@@ -32,11 +38,11 @@ const PageHeader = () => {
   return(
     <Header between={true} >
       <HeaderLeft gap={true}>
-        <Button type={"link"} onClick={resetRoute}>
+        <Button style={{padding:0}} type={"link"} onClick={resetRoute}>
         <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
         </Button>
-        <h2>项目</h2>
-        <h2>用户</h2>
+        <ProjectPopover />
+        <span>用户</span>
       </HeaderLeft>
 
       <HeaderRight>
