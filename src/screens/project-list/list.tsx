@@ -17,6 +17,7 @@ export const List = ({users,...props}: ListProps) => {
   const {mutate} = useEditProject();
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   // 先获取 project.id， 再然后晚一点得到 pin
+
   return (
      <Table rowKey={"id"}
             pagination={false} 
@@ -47,7 +48,7 @@ export const List = ({users,...props}: ListProps) => {
                 render(value,project){
                   return (
                     <span>
-                      {users.find((user) => user.id === project.id)?.name || '未知'}
+                      {users.find((user) => user.id === project.personId)?.name || '未知'}
                     </span>
                   )
                 }

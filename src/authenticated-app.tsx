@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "./context/auth-context";
 import { ProjectListScreen } from "./screens/project-list/project-list-index";
 import styled from "@emotion/styled";
-import { Row } from "./component/lib";
+import { ButtonNoPadding, Row } from "./component/lib";
 import { ReactComponent as SoftwareLogo } from "./assets/software-logo.svg";
 import { Button, Dropdown, Menu } from "antd";
 import { Navigate, Route, Routes,} from "react-router";
@@ -38,9 +38,9 @@ const PageHeader = () => {
   return(
     <Header between={true} >
       <HeaderLeft gap={true}>
-        <Button style={{padding:0}} type={"link"} onClick={resetRoute}>
+        <ButtonNoPadding type={"link"} onClick={resetRoute}>
         <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
-        </Button>
+        </ButtonNoPadding>
         <ProjectPopover />
         <span>用户</span>
       </HeaderLeft>

@@ -3,6 +3,7 @@ import { cleanObject } from "./index";
 import { Project } from "../types/project";
 import { useAsync } from "./use-async";
 import { useHttp } from "./http";
+import { useQuery } from "react-query";
 
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp();
@@ -69,4 +70,15 @@ export const useDeleteProject = () => {
     mutate,
     ...asyncResult,
   };
+};
+
+export const useProject = (id?: number) => {
+  const client = useHttp();
+  return useQuery<Project>(
+    ["project", { id }],
+    () => client(`projects/${id}`),
+    {
+      enabled: Boolean(id),
+    }
+  );
 };
