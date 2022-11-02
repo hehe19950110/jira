@@ -13,16 +13,16 @@ import { ProjectModal } from "screens/project-list/project-modal";
 import { ProjectPopover } from "component/project-pop-over";
 
 export const AuthenticatedApp = () => {
-  const [projectModalOpen,setProjectModalOpen] = useState(false);
+  const [projectModalOpen, setProjectModalOpen] = useState(false);
 
   return (
     <Container>
-      <PageHeader />
+      <PageHeader setProjectModalOpen={setProjectModalOpen} />
       <Button onClick={ () => setProjectModalOpen(true)} >打开</Button>
       <Main>
         <Router>
           <Routes>
-            <Route path={"/projects"} element={<ProjectListScreen />} />
+            <Route path={"/projects"} element={<ProjectListScreen  setProjectModalOpen={setProjectModalOpen}  />} />
             <Route path={"/projects/:projectId/*"} element={<ProjectScreen />} />
             <Route element={<Navigate to={'/projects'} />}/>
           </Routes>
@@ -34,14 +34,14 @@ export const AuthenticatedApp = () => {
   );
 }
 
-const PageHeader = () => {
+const PageHeader = (props: {setProjectModalOpen : (isOpen: boolean) => void}) => {
   return(
     <Header between={true} >
       <HeaderLeft gap={true}>
         <ButtonNoPadding type={"link"} onClick={resetRoute}>
         <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
         </ButtonNoPadding>
-        <ProjectPopover />
+        <ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />
         <span>用户</span>
       </HeaderLeft>
 

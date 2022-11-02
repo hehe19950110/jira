@@ -2,7 +2,7 @@ import React from "react"
 import { List } from "./list"
 import { SearchPanel } from "./search-panel"
 import styled from "@emotion/styled"
-import { Typography } from "antd"
+import { Button, Typography } from "antd"
 import { useProjects } from "../../utils/project"
 import { useUsers } from "../../utils/user"
 import { useDebounce, useDocumentTitle } from "../../utils"
@@ -10,7 +10,7 @@ import { Helmet } from "react-helmet"
 import { useProjectsSearchParams } from "./util"
 import { ButtonNoPadding, Row } from "component/lib"
 
-export const ProjectListScreen = () => {
+export const ProjectListScreen = (props: {setProjectModalOpen : (isOpen: boolean) => void}) => {
 
   useDocumentTitle('项目列表' , false);
 
@@ -27,11 +27,11 @@ export const ProjectListScreen = () => {
   <Container>
     <Row marginBottom={2} between={true}>
       <h1>项目列表</h1>
-      <ButtonNoPadding type={"link"} >
+      <Button onClick={ () => props.setProjectModalOpen(true)} type={"link"}>
         创建项目
-      </ButtonNoPadding>
+      </Button>
     </Row>
-    
+
     <select onChange={evt => {
       const value = evt.target.value
     }} />
@@ -39,7 +39,13 @@ export const ProjectListScreen = () => {
     {error ?  (
                <Typography.Text type={"danger"}> {error.message} </Typography.Text>
               ) : null}
-    <List refresh={retry} loading={isLoading} users={users || []} dataSource={list || [] || null}/>
+    <List 
+          setProjectModalOpen = {props.setProjectModalOpen}
+          refresh={retry} 
+          loading={isLoading} 
+          users={users || []} 
+          dataSource={list || [] }
+    />
   </Container>
   );
   
