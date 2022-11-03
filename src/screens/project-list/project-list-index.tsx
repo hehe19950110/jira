@@ -10,7 +10,7 @@ import { Helmet } from "react-helmet"
 import { useProjectsSearchParams } from "./util"
 import { ButtonNoPadding, Row } from "component/lib"
 
-export const ProjectListScreen = (props: {setProjectModalOpen : (isOpen: boolean) => void}) => {
+export const ProjectListScreen = (props: {projectButton:JSX.Element}) => {
 
   useDocumentTitle('项目列表' , false);
 
@@ -27,20 +27,15 @@ export const ProjectListScreen = (props: {setProjectModalOpen : (isOpen: boolean
   <Container>
     <Row marginBottom={2} between={true}>
       <h1>项目列表</h1>
-      <Button onClick={ () => props.setProjectModalOpen(true)} type={"link"}>
-        创建项目
-      </Button>
+      {props.projectButton}
     </Row>
 
-    <select onChange={evt => {
-      const value = evt.target.value
-    }} />
     <SearchPanel users={users || []} param={param} key={''} setParam={setParam}  />
     {error ?  (
                <Typography.Text type={"danger"}> {error.message} </Typography.Text>
               ) : null}
     <List 
-          setProjectModalOpen = {props.setProjectModalOpen}
+          projectButton={props.projectButton}
           refresh={retry} 
           loading={isLoading} 
           users={users || []} 

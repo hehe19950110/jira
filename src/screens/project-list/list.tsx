@@ -7,12 +7,13 @@ import { Link } from "react-router-dom";
 import { useEditProject } from "utils/project";
 import { Project } from "../../types/project";
 import { User } from "../../types/user"
+import { useProjectModal } from "./util";
 
 // TODO 把所有ID改成number类型
 interface ListProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;
-  setProjectModalOpen: (isOpen:boolean) => void;
+  projectButton: JSX.Element;
 }
 
 export const List = ({users,...props}: ListProps) => {
@@ -20,6 +21,8 @@ export const List = ({users,...props}: ListProps) => {
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   // 先获取 project.id， 再然后晚一点得到 pin
 
+  const {startEdit} = useProjectModal();
+  const editProject = (id: number) => () => startEdit(id);
   return (
      <Table rowKey={"id"}
             pagination={false} 
@@ -67,11 +70,19 @@ export const List = ({users,...props}: ListProps) => {
               },{
                 render(value,project) {
                   return (
-                  <Dropdown overlay={<Menu>
-                    <Menu.Item key={'edit'}>
-                      <ButtonNoPadding type={"link"} onClick={() => props.setProjectModalOpen(true)} >编辑</ButtonNoPadding>
-                    </Menu.Item>
-                  </Menu>}>
+                  <Dropdown 
+                    overlay={
+                      <Menu>
+                        <Menu.Item key={'edit'}>
+                          <ButtonNoPadding 
+                            type={"link"} onClick={editProject(project.id)} 
+                          >
+                            编辑
+                          </ButtonNoPadding>
+                        </Menu.Item>
+                      </Menu>
+                    }
+                  >
                     <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
                   </Dropdown>)
                 }
