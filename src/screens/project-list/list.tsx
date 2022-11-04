@@ -13,7 +13,7 @@ import { useProjectModal } from "./util";
 interface ListProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;
-  projectButton: JSX.Element;
+  //projectButton: JSX.Element;
 }
 
 export const List = ({users,...props}: ListProps) => {
@@ -21,8 +21,6 @@ export const List = ({users,...props}: ListProps) => {
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   // 先获取 project.id， 再然后晚一点得到 pin
 
-  const {startEdit} = useProjectModal();
-  const editProject = (id: number) => () => startEdit(id);
   return (
      <Table rowKey={"id"}
             pagination={false} 
@@ -75,7 +73,7 @@ export const List = ({users,...props}: ListProps) => {
                       <Menu>
                         <Menu.Item key={'edit'}>
                           <ButtonNoPadding 
-                            type={"link"} onClick={editProject(project.id)} 
+                            type={"link"} 
                           >
                             编辑
                           </ButtonNoPadding>
