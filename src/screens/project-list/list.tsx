@@ -12,7 +12,6 @@ import { useProjectModal } from "./util";
 // TODO 把所有ID改成number类型
 interface ListProps extends TableProps<Project> {
   users: User[];
-  refresh?: () => void;
   //projectButton: JSX.Element;
 }
 
