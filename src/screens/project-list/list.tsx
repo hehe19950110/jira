@@ -66,7 +66,7 @@ export const List = ({users,...props}: ListProps) => {
                   );
                 },
               },{
-                render(value,project) {
+                render(value, project) {
                   return <More project={project} />
                 }
               }

@@ -22,7 +22,7 @@ export const ProjectModal = () => {
     });
   };
   const closeModal = () => {
-    form.resetFields();
+    form.resetFields();   // 清空输入框
     close();
   };
 
@@ -33,7 +33,7 @@ export const ProjectModal = () => {
   return (
     <Drawer 
       forceRender={true}
-      onClose={close} 
+      onClose={closeModal} 
       width={"100%"} 
       visible={projectModalOpen} 
     >
