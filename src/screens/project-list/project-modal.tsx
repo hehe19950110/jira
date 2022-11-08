@@ -5,7 +5,7 @@ import { ErrorBox } from "component/lib";
 import { UserSelect } from "component/user-select";
 import React, { useEffect } from "react";
 import { useAddProject, useEditProject } from "utils/project";
-import { useProjectModal } from "./util";
+import { useProjectModal, useProjectsQueryKey } from "./util";
 
 export const ProjectModal = () => {
   const {projectModalOpen, close, editingProject, isLoading } = useProjectModal();
@@ -13,8 +13,8 @@ export const ProjectModal = () => {
 
   const title = editingProject ? "编辑项目" : "创建项目";
   
-  const { mutateAsync, error, isLoading: mutateLoading,} = useMutateProject();
-  const [form] = useForm();
+  const { mutateAsync, error, isLoading: mutateLoading,} = useMutateProject(useProjectsQueryKey());
+  const [form] = Form.useForm();
   const onFinish = (values: any) =>{
     mutateAsync({ ...editingProject, ...values }).then(() => {
       form.resetFields();
@@ -42,7 +42,7 @@ export const ProjectModal = () => {
           isLoading ? (<Spin size={"large"} />) : ( <>
             <h1>{title}</h1>
             <ErrorBox error={error}/>
-            <Form layout={"vertical"} style={{ width: "40rem" }} onFinish={onFinish} >
+            <Form form={form} layout={"vertical"} style={{ width: "40rem" }} onFinish={onFinish} >
               <Form.Item label={"名称"} name={"name"} rules={[{ required: true, message: "请输入项目名" }]} >
                 <Input placeholder={"请输入项目名称"} />
               </Form.Item>
