@@ -1,5 +1,7 @@
+import { useMemo } from "react";
 import { useLocation } from "react-router";
 import { useProject } from "utils/project";
+import { useUrlQueryParam } from "utils/url";
 
 export const useProjectIdInUrl = () => {
   const { pathname } = useLocation();
@@ -8,3 +10,11 @@ export const useProjectIdInUrl = () => {
 };
 
 export const useProjectInUrl = () => useProject(useProjectIdInUrl());
+
+export const useKanbanSearchParams = () => ({ projectId: useProjectIdInUrl() });
+
+export const useKanbansQueryKey = () => ["kanbans", useKanbanSearchParams()];
+
+export const useTasksSearchParams = () => ({ projectId: useProjectIdInUrl() });
+
+export const useTasksQueryKey = () => ["kanbans", useTasksSearchParams()];
