@@ -1,8 +1,9 @@
-import { useQuery } from "react-query";
+import { QueryKey, useMutation, useQuery } from "react-query";
 import { Project } from "types/project";
 import { Task } from "types/task";
 import { useDebounce } from "utils";
 import { useHttp } from "./http";
+import { useAddConfig } from "./use-optimistic-options";
 
 export const useTasks = (param?: Partial<Task>) => {
   const client = useHttp();
@@ -18,4 +19,16 @@ export const useTask = (id?: number) => {
   return useQuery<Project>(["task", { id }], () => client(`tasks/${id}`), {
     enabled: Boolean(id),
   });
+};
+
+export const useAddTask = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<Task>) =>
+      client(`tasks`, {
+        data: params,
+        method: "POST",
+      }),
+    useAddConfig(queryKey)
+  );
 };
