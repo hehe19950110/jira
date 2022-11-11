@@ -4,11 +4,13 @@ import { Kanban } from "types/kanban";
 import { Task } from "types/task";
 import { useTasks } from "utils/task";
 import { useTaskTypes } from "utils/task-type";
-import { useTasksSearchParams } from "./util";
+import { useTasksModal, useTasksSearchParams } from "./util";
 import taskIcon from 'assets/task.svg'
 import bugIcon from 'assets/bug.svg'
 import styled from "@emotion/styled";
 import { CreateTask } from "./create-task";
+import { Mark } from "component/mark";
+import { Drag, Drop, DropChild } from "component/drag-and-drop";
 
 const TaskTypeIcon = ({ id }: { id: number }) => {
   const {data : taskTypes } = useTaskTypes();
@@ -16,17 +18,17 @@ const TaskTypeIcon = ({ id }: { id: number }) => {
   if (!name) {
     return null
   }
-  return <img src={name === 'task' ? taskIcon : bugIcon} alt='' />;
+  return <img src={name === 'task' ? taskIcon : bugIcon} alt={'task-icon'} />;
 };
 
 const TaskCard = ({ task }: { task: Task }) => {
+  const { startEdit } = useTasksModal();
+  const { name: keyword } = useTasksSearchParams();
   return (
-    <Card
-      onClick={() => {}}
-      style={{ marginBottom: "0.5rem", cursor: "pointer" }}
-      key={task.id}
-    >
-    </Card>
+    <Card onClick={() => startEdit(task.id)} style={{marginBottom: '0.5rem', cursor:'pointer' }} key={task.id}>
+      <Mark keyword={keyword} name={task.name} />
+      <TaskTypeIcon id={task.typeId} />
+  </Card>
   );
 };
 
@@ -34,19 +36,24 @@ export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
   const { data: allTasks } = useTasks( useTasksSearchParams() );
   const tasks = allTasks?.filter( task => task.kanbanId === kanban.id);
 
+  const { startEdit } = useTasksModal();
+  
   return (
     <Container>
       <h2>{kanban.name}</h2>
       <More kanban={kanban} key={kanban.id} />
 
       <TasksContainer>
-        {tasks?.map(task =>( 
-          <Card style={{marginBottom: '0.5rem'}} key={task.id}>
-            <div>{task.name}</div>
-            <TaskTypeIcon id={task.typeId} />
-          </Card>
-        ))}
-      <CreateTask kanbanId={kanban.id} />
+
+          <DropChild style={{ minHeight: "1rem" }}>
+            {tasks?.map((task, taskIndex) => (
+                <div>
+                  <TaskCard key={task.id} task={task} />
+                </div>
+            ))}
+          </DropChild>
+
+        <CreateTask kanbanId={kanban.id} />
       </TasksContainer>
 
     </Container>
