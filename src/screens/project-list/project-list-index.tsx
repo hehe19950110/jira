@@ -7,7 +7,8 @@ import { useUsers } from "../../utils/user"
 import { useDebounce, useDocumentTitle } from "../../utils"
 import { Helmet } from "react-helmet"
 import { useProjectModal, useProjectsSearchParams } from "./util"
-import { ButtonNoPadding, ErrorBox, Row } from "component/lib"
+import { ButtonNoPadding, ErrorBox, Row, ScreenContainer } from "component/lib"
+import { Profiler } from "component/profiler"
 
 export const ProjectListScreen = () => {
 
@@ -25,22 +26,24 @@ export const ProjectListScreen = () => {
 
 
   return (
-  <Container>
-    <Row marginBottom={2} between={true}>
-      <h1>项目列表</h1>
-      <ButtonNoPadding onClick={open} type={"link"} >
-        创建项目
-      </ButtonNoPadding>
-    </Row>
+    <Profiler id={"项目列表"}>
+      <ScreenContainer>
+        <Row marginBottom={2} between={true}>
+          <h1>项目列表</h1>
+          <ButtonNoPadding onClick={open} type={"link"} >
+            创建项目
+          </ButtonNoPadding>
+        </Row>
 
-    <SearchPanel users={users || []} param={param} key={''} setParam={setParam}  />
-    <ErrorBox error={error}/>
-    <List 
-        loading={isLoading}
-        users={users || []}
-        dataSource={list || []} 
-    />
-  </Container>
+        <SearchPanel users={users || []} param={param} key={''} setParam={setParam}  />
+        <ErrorBox error={error}/>
+        <List 
+            loading={isLoading}
+            users={users || []}
+            dataSource={list || []} 
+        />
+      </ScreenContainer>
+    </Profiler>
   );
   
 }

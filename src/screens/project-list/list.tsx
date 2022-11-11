@@ -1,6 +1,6 @@
 import { Dropdown, Menu, Modal, Table, TableProps  } from "antd"
 import { ButtonNoPadding } from "component/lib";
-import { Pin } from "component/pin-icon";
+import { Pin } from "component/pin";
 import dayjs from "dayjs";
 import React from "react"
 import { Link } from "react-router-dom";
@@ -31,7 +31,7 @@ export const List = ({users,...props}: ListProps) => {
                   return (
                     <Pin
                       checked={project.pin}
-                      onCheckedChange={(pin) => {pinProject(project.id)}}
+                      onCheckedChange={pinProject(project.id)}
                     />
                   );
                 },
@@ -60,8 +60,7 @@ export const List = ({users,...props}: ListProps) => {
                 render(value, project) {
                   return (
                     <span>
-                      {project.created
-                        ? dayjs(project.created).format("YYYY-MM-DD") : "无"}
+                      {project.created? dayjs(project.created).format("YYYY-MM-DD") : "无"}
                     </span>
                   );
                 },
@@ -73,7 +72,6 @@ export const List = ({users,...props}: ListProps) => {
             ]} 
             {...props }
      />
-     
   );
 }
 
@@ -92,22 +90,22 @@ const More = ({ project }: { project: Project }) => {
       }
     });
   };
+
   return (
     <Dropdown 
       overlay={
         <Menu>
-          <Menu.Item onClick={editProject(project.id)} key={'edit'}>
-            <ButtonNoPadding  type={"link"} >编辑</ButtonNoPadding>
+          <Menu.Item onClick={editProject(project.id)} key={"edit"}>
+            编辑
           </Menu.Item>
           <Menu.Item onClick={() => confirmDeleteProject(project.id)} key={'delete'}>
-            <ButtonNoPadding  type={"link"} >删除</ButtonNoPadding>
+            删除
           </Menu.Item>
         </Menu>
-    }
-  >
+      }
+    >
     <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
     </Dropdown>
   )
-
 };
 
