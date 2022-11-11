@@ -37,7 +37,7 @@ export const DropChild = React.forwardRef<HTMLDivElement, DropChildProps>(
 type DragProps = Omit<DraggableProps, "children"> & { children: ReactNode };
 export const Drag = ({ children, ...props }: DragProps) => {
   return (
-    <Draggable {...props}>
+    <Draggable {...props} >
       {(provided) => {
         if (React.isValidElement(children)) {
           return React.cloneElement(children, {
