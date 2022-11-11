@@ -17,12 +17,11 @@ export const TaskModal = () => {
     useTasksQueryKey()
   );
   const { mutate: deleteTask } = useDeleteTask(useTasksQueryKey());
-
+  
   const onCancel = () => {
     close();
     form.resetFields(); //重置表单
   };
-
   const onOk = async () => {
     await editTask({ ...editingTask, ...form.getFieldsValue() });
     close();
