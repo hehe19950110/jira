@@ -41,9 +41,9 @@ const PageHeader = () => {
         <ButtonNoPadding type={"link"} onClick={resetRoute}>
         <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
         </ButtonNoPadding>
+
         <ProjectPopover />
         <UserPopover />
-        <span>用户</span>
       </HeaderLeft>
 
       <HeaderRight>
@@ -51,9 +51,9 @@ const PageHeader = () => {
       </HeaderRight>
     </Header>
   )
-
 }
- const User = () => {
+
+const User = () => {
   const { logout, user } = useAuth();
    return (
     <Dropdown 
@@ -70,7 +70,7 @@ const PageHeader = () => {
       </Button>
     </Dropdown>
   )
- }
+}
 
 /* 
 从内容出发，用flex ; 你先有一组内容(数量一般不固定),然后希望他们均匀的分布在容器中，由内容自己的大小决定占据的空间
