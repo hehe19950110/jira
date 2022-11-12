@@ -13,7 +13,7 @@ import { ProjectModal } from "screens/project-list/project-modal";
 import { ProjectPopover } from "component/project-pop-over";
 import { UserPopover } from "component/user-popover";
 
-export const AuthenticatedApp = () => {
+export default function AuthenticatedApp() {
   // const [projectModalOpen, setProjectModalOpen] = useState(false);
 
   return (

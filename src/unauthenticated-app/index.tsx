@@ -10,7 +10,7 @@ import { Helmet } from "react-helmet";
 import { useDocumentTitle } from "utils";
 import { ErrorBox } from "component/lib";
 
-export const UnauthenticatedApp = () => {
+export default function UnauthenticatedApp() {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
