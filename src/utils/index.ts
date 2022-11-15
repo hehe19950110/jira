@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
 export const isVoid = (value: unknown) =>
@@ -93,57 +93,54 @@ export const useArray = <T>(initialArray: T[]) => {
   };
 };
 
-// export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
-//   const oldTitle = useRef(document.title).current;
-//   // 页面加载时: 旧title
-//   // 加载后：新title
+export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
+  const oldTitle = useRef(document.title).current;
 
-//   useEffect(() => {
-//     document.title = title;
-//   }, [title]);
+  // 页面加载时: oldtitle === 旧title
+  // 加载后：oldtitle === 新title
 
-//   useEffect(() => {
-//     return () => {
-//       if (!keepOnUnmount) {
-//         // 如果不指定依赖，读到的就是旧title
-//         document.title = oldTitle;
-//       }
-//     };
-//   }, [keepOnUnmount, oldTitle]);
-// };
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
 
-// export const resetRoute = () => (window.location.href = window.location.origin);
+  useEffect(() => {
+    return () => {
+      if (!keepOnUnmount) {
+        document.title = oldTitle;
+      }
+    };
+  }, [keepOnUnmount, oldTitle]);
+};
 
-// /**
-//  * 传入一个对象，和键集合，返回对应的对象中的键值对
-//  * @param obj
-//  * @param keys
-//  */
-// export const subset = <
-//   O extends { [key in string]: unknown },
-//   K extends keyof O
-// >(
-//   obj: O,
-//   keys: K[]
-// ) => {
-//   const filteredEntries = Object.entries(obj).filter(([key]) =>
-//     keys.includes(key as K)
-//   );
-//   return Object.fromEntries(filteredEntries) as Pick<O, K>;
-// };
+export const resetRoute = () => (window.location.href = window.location.origin);
 
-// /**
-//  * 返回组件的挂载状态，如果还没挂载或者已经卸载，返回false；反之，返回true
-//  */
-// export const useMountedRef = () => {
-//   const mountedRef = useRef(false);
+/**
+传入一个对象，和键集合，返回对应的对象中的键值对
+@param obj
+@param keys
+ */
+export const subset = <
+  O extends { [key in string]: unknown },
+  K extends keyof O
+>(
+  obj: O,
+  keys: K[]
+) => {
+  const filteredEntries = Object.entries(obj).filter(([key]) =>
+    keys.includes(key as K)
+  );
+  return Object.fromEntries(filteredEntries) as Pick<O, K>;
+};
 
-//   useEffect(() => {
-//     mountedRef.current = true;
-//     return () => {
-//       mountedRef.current = false;
-//     };
-//   });
+// 返回组件的挂载状态，如果还没挂载或者已经卸载，返回false；反之，返回true
+export const useMountedRef = () => {
+  const mountedRef = useRef(false);
 
-//   return mountedRef;
-// };
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  });
+  return mountedRef;
+};

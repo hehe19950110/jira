@@ -1,32 +1,54 @@
 import React from "react"
 import { List } from "./list"
 import { SearchPanel } from "./search-panel"
-import { useState } from "react"
 import styled from "@emotion/styled"
-import { Typography } from "antd"
 import { useProjects } from "../../utils/project"
 import { useUsers } from "../../utils/user"
-import { useDebounce } from "../../utils"
+import { useDebounce, useDocumentTitle } from "../../utils"
+import { Helmet } from "react-helmet"
+import { useProjectModal, useProjectsSearchParams } from "./util"
+import { ButtonNoPadding, ErrorBox, Row, ScreenContainer } from "component/lib"
+import { Profiler } from "component/profiler"
 
 export const ProjectListScreen = () => {
 
-  const [param, setParam] = useState({
-    name:"",
-    personId:"",
-  });
-  const debouncedParam = useDebounce(param, 500);
-  const { isLoading, error, data: list } = useProjects(debouncedParam);
-  const {data:users} = useUsers();
+  useDocumentTitle('项目列表' , false);
+
+  const { open } = useProjectModal();
+
+  // 当 obj 是对象时 会无限循环；是基本类型时，就不会无限循环;
+  // 基本类型，可以放在依赖里； 组件状态，可以放在依赖里；
+  // 非组件状态的对象，绝不可以放在依赖里
+
+  const [param, setParam] = useProjectsSearchParams();
+  const {isLoading, error, data:list} = useProjects(useDebounce(param,200));
+  const { data: users } = useUsers();
+
 
   return (
-  <Container>
-    <h2>项目列表</h2>
-    <SearchPanel users={users || []} param= {param} setParam= {setParam} />
-    {error ? <Typography.Text type={"danger"}> {error.message} </Typography.Text> : null}
-    <List loading={isLoading} users={users || []} dataSource={list || []} />
-  </Container>
+    <Profiler id={"项目列表"}>
+      <ScreenContainer>
+        <Row marginBottom={2} between={true}>
+          <h1>项目列表</h1>
+          <ButtonNoPadding onClick={open} type={"link"} >
+            创建项目
+          </ButtonNoPadding>
+        </Row>
+
+        <SearchPanel users={users || []} param={param} key={''} setParam={setParam}  />
+        <ErrorBox error={error}/>
+        <List 
+            loading={isLoading}
+            users={users || []}
+            dataSource={list || []} 
+        />
+      </ScreenContainer>
+    </Profiler>
   );
+  
 }
+
+ProjectListScreen.whyDidYouRender = true
 
 const Container = styled.div`
 padding: 3.2rem`

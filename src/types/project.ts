@@ -1,11 +1,12 @@
 export interface Project {
   id: number;
   name: string;
-  personId: string;
+  personId: number;
   pin: boolean;
   organization: string;
   created: number;
   email: string;
   title: string;
   token: string;
+  ownerId: string | number;
 }

@@ -5,6 +5,7 @@ import { User } from "../types/user";
 import { useMount } from "../utils";
 import { useAsync } from "../utils/use-async";
 import { FullPageErrorFallback, FullPageLoading } from "../component/lib";
+import { useQueryClient } from "react-query";
 
 interface AuthForm {
   username: string;
@@ -30,6 +31,7 @@ const AuthContext = React.createContext<
     }
   | undefined
 >(undefined);
+
 AuthContext.displayName = "AuthContext";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -43,9 +45,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setData: setUser,
   } = useAsync<User | null>();
   
+  const queryClient = useQueryClient();
+  
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
-  const logout = () => auth.logout().then( () => {setUser(null)} );
+  const logout = () => auth.logout().then( 
+    () => {
+      setUser(null)
+      queryClient.clear() //把用useQuery获取的所有数据 都清除掉
+    } 
+  );
     
   useMount( () => {
     run ( bootstrapUser())

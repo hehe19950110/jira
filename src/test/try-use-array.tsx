@@ -9,8 +9,6 @@ export const TsReactTest = () => {
   const { value, clear, removeIndex ,add} = useArray(persons);
 
   useMount (() => {
-    // console.log(value.notExist);
-    
     // add( {name : "zack"});
 
     // removeIndex("123")

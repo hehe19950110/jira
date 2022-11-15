@@ -1,30 +1,27 @@
+import { ErrorBoundary } from 'component/error-boundary';
+import { FullPageErrorFallback, FullPageLoading } from 'component/lib';
 import React from 'react';
 import './App.css';
-import { AuthenticatedApp } from './authenticated-app';
 import { useAuth } from './context/auth-context';
-import { UnauthenticatedApp } from './unauthenticated-app';
+// import { AuthenticatedApp } from './authenticated-app';
+// import { UnauthenticatedApp } from './unauthenticated-app';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
+const AuthenticatedApp = React.lazy(() => import("authenticated-app"));
+const UnauthenticatedApp = React.lazy(() => import("unauthenticated-app"));
 
 function App() {
   const {user} = useAuth()
-  fetch(`${apiUrl}/register`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username: "jack",
-      password: "123456",
-    }),
-  }).then((res) => {
-    debugger;
-  });
 
   return (
     <div className="App">
-      {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+      <ErrorBoundary fallbackRender={FullPageErrorFallback}>
+        <React.Suspense fallback={<FullPageLoading />} >
+         {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+        </React.Suspense>
+        
+      </ErrorBoundary>
     </div>
   );
 }
